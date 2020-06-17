@@ -105,8 +105,18 @@ class App extends Component {
             }
         ) */
 
-
-        Geolocation.getCurrentPosition(info => console.log(info));
+        //Geolocation.setRNConfiguration(true)
+        //Geolocation.requestAuthorization().Alert('permitir ubicacion')
+        //Geolocation.getCurrentPosition(info => console.log(info));
+        Geolocation.getCurrentPosition(
+            position => {
+              const location = JSON.stringify(position);
+      
+              this.setState({ location });
+            },
+            error => Alert.alert(error.message),
+            { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+          );
 
 /*         navigator.geolocation.getCurrentPosition((position) => {
             var lat = parseFloat(position.coords.latitude)
