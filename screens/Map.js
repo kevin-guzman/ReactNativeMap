@@ -20,6 +20,7 @@ import
 import Geolocation from '@react-native-community/geolocation';
 
 import Reload from '../Img/Reload.png'
+import RenderMap from '../components/RenderMap';
 /* import CovidMarker from '../Img/MapMarkers/CovidMarker.png'
 import GeneralMarker from '../Img/MapMarkers/GeneralMarker.png'
 import OdontologiaMarker from '../Img/MapMarkers/OdontologiaMarker.png' */
@@ -73,7 +74,7 @@ class App extends Component {
         
     }
 
-    /* async */ componentDidMount(){
+    async componentDidMount(){
     
    /*  //console.log('We are in')
     const url = 'http://181.54.182.7:5000/api/hospitals'
@@ -105,14 +106,11 @@ class App extends Component {
             }
         ) */
 
-        //Geolocation.setRNConfiguration(true)
-        //Geolocation.requestAuthorization().Alert('permitir ubicacion')
-        //Geolocation.getCurrentPosition(info => console.log(info));
         Geolocation.getCurrentPosition(
             position => {
-              const location = JSON.stringify(position);
-      
-              this.setState({ location });
+                const location = JSON.stringify(position);
+                console.log(`Posicion: ${position}`);
+                this.setState({ location });
             },
             error => Alert.alert(error.message),
             { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
@@ -170,76 +168,13 @@ class App extends Component {
         
         return (
             <View style={styles.container}>
-                <View style={styles.mapContainer} >
-                    <MapView
-                        style={styles.mapStyle}
-                        showsUserLocation={true}
-                        ref='map'
-                        initialRegion={Bogotá_Coordinates}
-                    >
-                        {
-                            this.state.Hospitals.map( (x,i) =>{    
-                            return(
-                                <Marker 
-                                coordinate={
-                                    {latitude: parseFloat(x.latitude) , 
-                                    longitude: parseFloat(x.longitude)} 
-                                } 
-                                key={i}
-                                title={x.title }
-                                description={x.address}
-                                /* onCalloutPress={()=> this.GoToQR(x.title,x.address)} */
-                                >
-                                    {
-                                    (x.category === 1 && HospitalCategory === 'Covid' ) || (HospitalCategory === 'NoSelected' && x.category === 1) ?
-                                        
-                                        <Image
-                                            onLoad={() => this.forceUpdate()}
-                                            onLayout={() => this.forceUpdate()}
-                                            source={require('../Img/MapMarkers/CovidMarker.png')}
-                                            style={styles.markerImage}
-                                            >
-                                        </Image>
-                                        :
-                                        (x.category === 2 && HospitalCategory === 'General' ) || (HospitalCategory === 'NoSelected' && x.category === 2) ?
-                                            <Image
-                                            onLoad={() => this.forceUpdate()}
-                                            onLayout={() => this.forceUpdate()}
-                                            source={require('../Img/MapMarkers/GeneralMarker.png')}
-                                            style={styles.markerImage}
-                                            >
-                                            </Image>                              
-                                            :
-                                            (x.category === 3 && HospitalCategory === 'Odontologia' ) || (HospitalCategory === 'NoSelected' && x.category === 3) ?
-                                                <Image
-                                                onLoad={() => this.forceUpdate()}
-                                                onLayout={() => this.forceUpdate()}
-                                                source={require('../Img/MapMarkers/OdontologiaMarker.png')}
-                                                style={styles.markerImage}
-                                                >
-                                                </Image>
-                                                :
-                                                <Image
-                                                    onLoad={() => this.forceUpdate()}
-                                                    onLayout={() => this.forceUpdate()}
-                                                    source={require('../Img/MapMarkers/Undefined.png')}
-                                                    style={styles.markerImage}
-                                                >
-                                                </Image>                                
-                                    }
-                                    {/* <Image
-                                        onLoad={() => this.forceUpdate()}
-                                        onLayout={() => this.forceUpdate()}
-                                        source={require('../Img/MapMarkers/CovidMarker.png')}
-                                        style={{width:50, height:50}}
-                                    >
-                                    </Image> */}
-                                </Marker>
-                            )
-                            } )
-                        }
-                    </MapView>
-                </View>
+                
+                    <RenderMap
+                        Hospitals={this.state.Hospitals}
+                        refreshScreen={this.state.KeyRefresh}
+                        HospitalCategory={this.state.HospitalCategory}
+                    />
+                
 
                 <View style={styles.footer} >
                     <View style={styles.viewTouchable} >
