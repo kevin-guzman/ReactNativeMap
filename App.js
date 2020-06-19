@@ -15,17 +15,8 @@ import {
   Text,
   StatusBar,
 } from 'react-native';
-import Map from './screens/Map';
-import  
-    MapView,
-    {Marker,
-    Polyline,
-    Callout,
-    PROVIDER_GOOGLE,
-    GOOGLE_MAPS_APIKEY,
-        
-} from 'react-native-maps'; 
 
+import Navigator from './src/Navigator'
 
 export default class App extends Component {
   render(){
@@ -34,7 +25,7 @@ export default class App extends Component {
       latitudeDelta: 0.27, /*0.0922*/
       longitudeDelta: 0.27, /*0.0421*/};
     return(
-        <Map/>
+        <Navigator></Navigator>
     )
   }
 }

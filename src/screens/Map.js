@@ -19,12 +19,12 @@ import
 } from 'react-native-maps'; 
 import Geolocation from '@react-native-community/geolocation';
 
-import Reload from '../Img/Reload.png'
-import RenderMap from '../components/Map/RenderMap';
-import ButtonMap from '../components/Map/ButtonsMap';
-import CovidMarker from '../Img/MapMarkers/CovidMarker.png'
-import GeneralMarker from '../Img/MapMarkers/GeneralMarker.png'
-import OdontologiaMarker from '../Img/MapMarkers/OdontologiaMarker.png'
+import Reload from '../utils/Img/Reload.png'
+import RenderMap from '../components/Map/RenderMap'
+import ButtonMap from '../components/Map/ButtonsMap'
+import CovidMarker from '../utils/Img/MapMarkers/CovidMarker.png'
+import GeneralMarker from '../utils/Img/MapMarkers/GeneralMarker.png'
+import OdontologiaMarker from '../utils/Img/MapMarkers/OdontologiaMarker.png'
 
 
 
@@ -77,12 +77,10 @@ class App extends Component {
 
     async componentDidMount(){
     
-   /*  //console.log('We are in')
-    const url = 'http://181.54.182.7:5000/api/hospitals'
+    /* const url = 'http://181.54.182.7:5000/api/hospitals'
     const response = await fetch(url)
     let data = await response.json()
     //console.log(data)
-
         this.setState({
             Mapa:data
         })
@@ -91,7 +89,7 @@ class App extends Component {
         let Go  = []
         DataRead.map(function(arr){
             
-            const obj={
+        const obj={
             latitude:arr.lat,
             longitude:arr.lng,
             title:arr.name,
@@ -99,15 +97,13 @@ class App extends Component {
             category:arr.category
             }
             Go.push(obj)
-            console.log(obj)
+            //console.log(obj)
         })
-        this.setState(
-            {
-            Hospitals:Go
-            }
-        ) */
+        this.setState({Hospitals:Go});  */
+        
 
-        Geolocation.getCurrentPosition(
+
+        /* await Geolocation.getCurrentPosition(
             position => {
                 const location = JSON.stringify(position);
                 console.log(`Posicion: ${position}`);
@@ -115,28 +111,8 @@ class App extends Component {
             },
             error => Alert.alert(error.message),
             { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
-          );
+        ).catch(e=>console.log(e)) */
 
-/*         navigator.geolocation.getCurrentPosition((position) => {
-            var lat = parseFloat(position.coords.latitude)
-            var long = parseFloat(position.coords.longitude)
-            console.log(lat)
-            console.log(long)
-        
-            var initialRegion = {
-                latitude: lat,
-                longitude: long,
-                latitudeDelta: LATITUDE_DELTA,
-                longitudeDelta: LONGITUDE_DELTA,
-            }
-        
-            this.setState({initialPosition: initialRegion})
-            },
-            (error) => alert(JSON.stringify(error)),
-            {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}); */
-
-        /* {this.MapList()} */
-        
         
     }
 
@@ -160,7 +136,55 @@ class App extends Component {
             //KeyRefresh: this.state.KeyRefresh+1,
             HospitalCategory: ref
         })
+    }
 
+    onMapPress = (MarkerCoord) =>{
+        //console.log('in')
+        //Alert.alert("coordinates:" + JSON.stringify(MarkerCoord.nativeEvent.coordinate));
+        let m= MarkerCoord.nativeEvent.coordinate
+        let coor=
+            {
+                lat: m.latitude,
+                lng: m.longitude,
+                name:"Prueba",
+                address:"1",
+                category:"2"
+            }
+        
+        console.log('inx2')
+        console.log(coor)
+        this.setState({KeyRefresh: this.state.KeyRefresh +1})
+        this.sendMarker(m)
+
+    }
+
+    sendMarker = async(coor) =>{
+        fetch('http://181.54.182.7:5000/api/hospitals', {
+            method: 'POST',
+            headers: {
+            Accept: 'application/json',
+            'Content-Type':'application/json',
+            },
+            body: JSON.stringify({
+                lat:coor.latitude,
+                lng:m.longitude,
+                name:"Prueba",
+                address:"1",
+                category:"2"
+            })
+            
+        })
+        .then((response) => response.json())
+            .then((text) => {
+            //console.log(text._id)
+            //console.log(text._id.toString())
+            //this.setState({valueForQRCode: (text._id).toString()})
+            console.log('Innn')
+            
+            })
+            .catch(err=>{
+            console.log(err)
+            })
     }
 
     render(){
@@ -180,6 +204,7 @@ class App extends Component {
                         Hospitals={this.state.Hospitals}
                         refreshScreen={this.state.KeyRefresh}
                         HospitalCategory={this.state.HospitalCategory}
+                        onMapPress={this.onMapPress}
                     />
                 </View>
                 <View style={styles.footer} >
