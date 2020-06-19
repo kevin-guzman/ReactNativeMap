@@ -9,17 +9,7 @@ import {
     Alert,
     Picker
 } from 'react-native';
-import  
-    MapView,
-    {Marker,
-    Polyline,
-    Callout,
-    PROVIDER_GOOGLE,
-    GOOGLE_MAPS_APIKEY,
-        
-} from 'react-native-maps'; 
 import { TextInput, Button } from 'react-native-paper';
-import { BaseButton } from 'react-native-gesture-handler';
 
 class AddMarker extends Component{
     constructor(props){
@@ -46,11 +36,11 @@ class AddMarker extends Component{
     }
     add = () =>{
         const {navigation}=this.props
-        const latitude = navigation.getParam('lat')
-        const longitude = navigation.getParam('lng')
+        const latitude = navigation.getParam('lat').toString()
+        const longitude = navigation.getParam('lng').toString()
         const {MarkerName} = this.state;
         const {MarkerType} = this.state;
-        const category="";
+        var category="";
         switch(MarkerType){
             case "Covid":
                 category="1";
@@ -60,18 +50,26 @@ class AddMarker extends Component{
                 category="3"
         }
 
-        fetch('http://181.54.182.7:5000/api/hospitals', {
+        console.log({
+            lat: latitude,
+            lng: longitude,
+            name: MarkerName,
+            address: "1",
+            category: category
+        })
+
+        /* fetch('http://181.54.182.7:5000/api/hospitals', {
             method: 'POST',
             headers: {
             Accept: 'application/json',
             'Content-Type':'application/json',
             },
             body: JSON.stringify({
-                lat:latitude,
-                lng:longitude,
-                name:MarkerName,
-                address:"1",
-                category:category
+                lat: latitude,
+                lng: longitude,
+                name: MarkerName,
+                address: "1",
+                category: category
             })
         })
         .then((response) => response.json())
@@ -84,7 +82,7 @@ class AddMarker extends Component{
             })
             .catch(err=>{
                 console.log(err)
-            })
+            }) */
 
         navigation.navigate('MapScreen')
     }
