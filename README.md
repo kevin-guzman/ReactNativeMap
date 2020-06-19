@@ -7,6 +7,7 @@ Go to folder proyect and write the following commands
 - npm install react-native-reanimated react-native-gesture-handler react-native-screens react-native-safe-area-context @react-native-community/masked-view
 - npm install react-navigation-stack @react-native-community/masked-view react-native-safe-area-context
 - npm install react-native-maps --save-exact
+
 And thats all
 
 Runing on android device or emulator:
