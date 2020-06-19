@@ -16,7 +16,7 @@ let ButtonMap = (props) =>{
                     backgroundColor:props.bgColor,
                     borderWidth:1,
                     marginVertical:'3%',
-                    marginHorizontal:'0%',
+                    marginHorizontal:'1%',
                     flexDirection:"row",
                     alignSelf:"center"
                     }}
@@ -37,21 +37,20 @@ let ButtonMap = (props) =>{
 
 const styles = StyleSheet.create({
     viewTouchable:{
-      marginHorizontal:'1%',
-      alignSelf:'center',
+        marginVertical:'3%',
+        alignSelf:'center',
+        //flex:1
     },
-  
     textTouchable:{
-      textAlign:'center', 
-      margin:'3%'
+        textAlign:'center', 
+        margin:'3%'
     },
-
     styleTouchable:{
-      flexDirection:'row',
-      justifyContent:'space-between',
-      //marginVertical:'4%'
+        flexDirection:'row',
+        justifyContent:'space-between',
+        //marginVertical:'4%'
     },
-  
-  });
 
-  export default ButtonMap;
+});
+
+export default ButtonMap;

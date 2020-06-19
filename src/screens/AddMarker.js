@@ -4,12 +4,12 @@ import {
     Text, 
     View,
     StatusBar,
-    TouchableOpacity,
-    Image,
     Alert,
-    Picker
 } from 'react-native';
-import { TextInput, Button } from 'react-native-paper';
+import AsyncStorage from '@react-native-community/async-storage';
+import { TextInput, Button, Title } from 'react-native-paper';
+import {Picker} from '@react-native-community/picker';
+
 
 class AddMarker extends Component{
     constructor(props){
@@ -18,7 +18,8 @@ class AddMarker extends Component{
         this.state={
             MarkerName:'',
             MarkerType:'',
-            selectedItem:''
+            selectedItem:'',
+            MarkerAdress:'',
         }
     }
     markerTypeList = () =>{
@@ -34,55 +35,47 @@ class AddMarker extends Component{
             })
         )
     }
-    add = () =>{
+    add = async() =>{
         const {navigation}=this.props
-        const latitude = navigation.getParam('lat').toString()
-        const longitude = navigation.getParam('lng').toString()
+        const latitude = navigation.getParam('lat')
+        const longitude = navigation.getParam('lng')
         const {MarkerName} = this.state;
         const {MarkerType} = this.state;
-        var category="";
+        const {MarkerAdress} = this.state;
+        var category=0;
+
+        var M= await AsyncStorage.getItem('Markers');
+        M= JSON.parse(M)
+        
         switch(MarkerType){
             case "Covid":
-                category="1";
+                category=1;
+                console.log('case1')
+            break;
             case "Odontologia":
-                category="2"
+                category=2
+                console.log('case2')
+            break;
             case "General":
-                category="3"
+                category=3
+                console.log('case3')
+            break;
         }
 
-        console.log({
-            lat: latitude,
-            lng: longitude,
-            name: MarkerName,
-            address: "1",
+        var obj={
+            latitude: latitude,
+            longitude: longitude,
+            title: MarkerName,
+            address: MarkerAdress,
             category: category
-        })
+        }
+        M.push(obj)
 
-        /* fetch('http://181.54.182.7:5000/api/hospitals', {
-            method: 'POST',
-            headers: {
-            Accept: 'application/json',
-            'Content-Type':'application/json',
-            },
-            body: JSON.stringify({
-                lat: latitude,
-                lng: longitude,
-                name: MarkerName,
-                address: "1",
-                category: category
-            })
-        })
-        .then((response) => response.json())
-            .then((text) => {
-            //console.log(text._id)
-            //console.log(text._id.toString())
-            //this.setState({valueForQRCode: (text._id).toString()})
-            console.log('Innn')
-            
-            })
-            .catch(err=>{
-                console.log(err)
-            }) */
+        try {
+            await AsyncStorage.setItem('Markers', JSON.stringify(M));
+        } catch (error) {
+            Alert.alert(error)
+        }
 
         navigation.navigate('MapScreen')
     }
@@ -91,14 +84,27 @@ class AddMarker extends Component{
         return(
             <View style={styles.container} >
                 <View>
+                    <Title
+                        style={{alignSelf:"center", marginTop:50}}
+                    >
+                        ¡Agregar tu marcador!
+                    </Title>
                     <TextInput
-                        style={{marginHorizontal:'5%', marginTop:'30%'}}
-                        label='Selecciona el nombre del marcador'
+                        style={{marginHorizontal:'5%', marginTop:20}}
+                        label='Escribe el nombre del marcador'
                         onChangeText={(MarkerName)=> this.setState({MarkerName})} 
                     />
+                    <TextInput
+                        style={{marginHorizontal:'5%', marginTop:'5%'}}
+                        label='Escribe La direccion del marcador'
+                        onChangeText={(MarkerAdress)=> this.setState({MarkerAdress})} 
+                    />
+                    <View>
+
+                    </View>
                     <Picker
-                        style={{marginTop: 15, marginVertical: '7%',marginHorizontal:'5%'}}
-                        selectedValue= {(this.state && this.state.selectedItem) || 'a'} //{this.state.selectedItem}
+                        style={{marginTop: 15, marginTop: '10%',marginHorizontal:'5%'}}
+                        selectedValue= {(this.state && this.state.MarkerType) || 'a'} //{this.state.selectedItem}
                         onValueChange={(x,i)=>{
                             this.setState({MarkerType: x, selectedItem: x})
                             console.log(x)
@@ -135,4 +141,37 @@ const styles = StyleSheet.create({
 
 })
 
-export default AddMarker
+export default AddMarker;
+
+
+
+
+
+
+/*Este código es para usarlo con una api :3*/ 
+
+        /* fetch('http://181.54.182.7:5000/api/hospitals', {
+            method: 'POST',
+            headers: {
+            Accept: 'application/json',
+            'Content-Type':'application/json',
+            },
+            body: JSON.stringify({
+                lat: latitude,
+                lng: longitude,
+                name: MarkerName,
+                address: "1",
+                category: category
+            })
+        })
+        .then((response) => response.json())
+            .then((text) => {
+            //console.log(text._id)
+            //console.log(text._id.toString())
+            //this.setState({valueForQRCode: (text._id).toString()})
+            console.log('Innn')
+            
+            })
+            .catch(err=>{
+                console.log(err)
+            }) */

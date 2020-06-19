@@ -6,19 +6,11 @@ import {
     StatusBar,
     TouchableOpacity,
     Image,
-    Alert
+    Alert,
 } from 'react-native';
-import  
-    MapView,
-    {Marker,
-    Polyline,
-    Callout,
-    PROVIDER_GOOGLE,
-    GOOGLE_MAPS_APIKEY,
-        
-} from 'react-native-maps'; 
-//import Geolocation from '@react-native-community/geolocation';
 
+import AsyncStorage from '@react-native-community/async-storage';
+//import Geolocation from '@react-native-community/geolocation';
 import Reload from '../utils/Img/Reload.png'
 import RenderMap from '../components/Map/RenderMap'
 import ButtonMap from '../components/Map/ButtonsMap'
@@ -27,19 +19,15 @@ import GeneralMarker from '../utils/Img/MapMarkers/GeneralMarker.png'
 import OdontologiaMarker from '../utils/Img/MapMarkers/OdontologiaMarker.png'
 
 
-
-
-
 class App extends Component {
 
     constructor (props){
     super(props);
-    /* setInterval(() => {
-      this._getLocationAsync();
-    }, 200); */
+    /*  setInterval(() => {
+      this.Reading();
+    }, 2000);  */
     this.state={
         Nombre:null,
-        Hospitals:[],
         Hospitals:[ 
                     {latitude: 4.699050, longitude: -74.050105, category:1, title:'Tunal'},
                     {latitude: 4.671959, longitude: -74.083579, category:2, title:'Chricales'},
@@ -57,52 +45,33 @@ class App extends Component {
         };
     }
 
-    async componentDidMount(){
-    const url = 'http://181.54.182.7:5000/api/hospitals'
-    const response = await fetch(url)
-    let data = await response.json()
-    //console.log(data)
-        this.setState({
-            Mapa:data
-        })
-
-        let DataRead = this.state.Mapa 
-        let Go  = []
-        DataRead.map(function(arr){
-            
-        const obj={
-            latitude:arr.lat,
-            longitude:arr.lng,
-            title:arr.name,
-            address:arr.address,
-            category:arr.category
-            }
-            Go.push(obj)
-            //console.log(obj)
-        })
-        //this.setState({Hospitals:Go});  
-        /* await Geolocation.getCurrentPosition(
-            position => {
-                const location = JSON.stringify(position);
-                console.log(`Posicion: ${position}`);
-                this.setState({ location });
-            },
-            error => Alert.alert(error.message),
-            { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
-        ).catch(e=>console.log(e)) */
+    componentDidMount = async() =>{
+        try {
+            await AsyncStorage.setItem('Markers', JSON.stringify(this.state.Hospitals));
+            console.log('pushed')
+        } catch (error) {
+            Alert.alert(error)
+        }
     }
 
-    /*GoToQR = (HN,HA) =>{
-    const {navigation}= this.props;
-    navigation.navigate('QR', 
-                                {
-                                HospitalName: HN, 
-                                HospitalAddres:HA, 
-                                UserLatitude: this.state.UserLatitude, 
-                                UserLongitude: this.state.UserLongitude 
-                                }
-                            )
-    } */
+    Reading = async(KeyRefresh) =>{
+        this.setState({
+            HospitalCategory: 'NoSelected', KeyRefresh: KeyRefresh+1
+        })
+        try {
+            const myArray = await AsyncStorage.getItem('Markers');
+            if (myArray !== null) {
+              // We have data!!
+                console.log('Async');
+                console.log(JSON.parse(myArray));
+                console.log(this.state.Hospitals)
+                this.setState({Hospitals: JSON.parse(myArray)})
+            }
+        } catch (error) {
+            Alert.alert(error)
+        }
+    }
+    
     
     touchedOpacity = (ref) =>{
         this.setState({
@@ -114,42 +83,11 @@ class App extends Component {
     onMapPress = (MarkerCoord) =>{
         const {navigation}=this.props
         let m= MarkerCoord.nativeEvent.coordinate
-        console.log(m)
-        //this.setState({KeyRefresh: this.state.KeyRefresh +1})
-        //this.sendMarker(m) 
+        this.setState({KeyRefresh: this.state.KeyRefresh +1})
         navigation.navigate('AddMarker',{
             lat: m.latitude,
             lng: m.longitude
-        }) //this.props.navigation
-
-    }
-
-    sendMarker = async(coor) =>{
-        fetch('http://181.54.182.7:5000/api/hospitals', {
-            method: 'POST',
-            headers: {
-            Accept: 'application/json',
-            'Content-Type':'application/json',
-            },
-            body: JSON.stringify({
-                lat:coor.latitude,
-                lng:m.longitude,
-                name:"Prueba",
-                address:"1",
-                category:"2"
-            })    
         })
-        .then((response) => response.json())
-            .then((text) => {
-            //console.log(text._id)
-            //console.log(text._id.toString())
-            //this.setState({valueForQRCode: (text._id).toString()})
-            console.log('Innn')
-            
-            })
-            .catch(err=>{
-            console.log(err)
-            })
     }
 
     render(){
@@ -163,7 +101,7 @@ class App extends Component {
     const {KeyRefresh} = this.state;
         
         return (
-            <View style={styles.container}>
+            <View style={styles.container} >
                 <View style={styles.mapContainer}  >
                     <RenderMap
                         Hospitals={this.state.Hospitals}
@@ -196,9 +134,9 @@ class App extends Component {
                     />
                     <View style={{fle:1,marginTop:'1%',  alignItems:'flex-end', marginHorizontal:'0%'}} >
                         <TouchableOpacity
-                            onPress={(KeyRefresh)=> this.setState({
-                                HospitalCategory: 'NoSelected', KeyRefresh: KeyRefresh+1}
-                            )} //this.componentDidMount()
+                            onPress={(KeyRefresh)=> this.Reading(KeyRefresh)
+                                
+                            } //this.componentDidMount()
                         >
                             <Image 
                                 source={Reload}
@@ -225,11 +163,10 @@ const styles = StyleSheet.create({
         marginTop: StatusBar.currentHeight
     },
     mapContainer:{
-        flex:8,
+        flex:10,
         borderColor:'black',
         borderWidth:1,
         marginHorizontal:'3%',
-        //marginVertical:'7%',
         width:'95%',
         height:'90%',
         borderRadius:4,
@@ -241,8 +178,110 @@ const styles = StyleSheet.create({
     },
     footer:{
         flexDirection:'row',
+        flex:1,
         //justifyContent:'space-between',
         //marginVertical:'4%'
     },
 });
 export default App;
+
+
+
+
+/*Este código es para usarlo con una api :3*/ 
+
+
+/*
+async componentDidMount(){
+
+        
+
+
+     const url = 'http://181.54.182.7:5000/api/hospitals'
+    const response = await fetch(url)
+    let data = await response.json()
+    //console.log(data)
+        this.setState({
+            Mapa:data
+        })
+
+        let DataRead = this.state.Mapa 
+        let Go  = []
+        DataRead.map(function(arr){
+            
+        const obj={
+            latitude:arr.lat,
+            longitude:arr.lng,
+            title:arr.name,
+            address:arr.address,
+            category:arr.category
+            }
+            Go.push(obj)
+            //console.log(obj)
+        }) 
+        //this.setState({Hospitals:Go});  
+         await Geolocation.getCurrentPosition(
+            position => {
+                const location = JSON.stringify(position);
+                console.log(`Posicion: ${position}`);
+                this.setState({ location });
+            },
+            error => Alert.alert(error.message),
+            { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+        ).catch(e=>console.log(e)) 
+    }
+
+    GoToQR = (HN,HA) =>{
+    const {navigation}= this.props;
+    navigation.navigate('QR', 
+                                {
+                                HospitalName: HN, 
+                                HospitalAddres:HA, 
+                                UserLatitude: this.state.UserLatitude, 
+                                UserLongitude: this.state.UserLongitude 
+                                }
+                            )
+    } 
+    
+    
+    
+
+
+    sendMarker = async(coor) =>{
+        fetch('http://181.54.182.7:5000/api/hospitals', {
+            method: 'POST',
+            headers: {
+            Accept: 'application/json',
+            'Content-Type':'application/json',
+            },
+            body: JSON.stringify({
+                lat:coor.latitude,
+                lng:m.longitude,
+                name:"Prueba",
+                address:"1",
+                category:"2"
+            })    
+        })
+        .then((response) => response.json())
+            .then((text) => {
+            //console.log(text._id)
+            //console.log(text._id.toString())
+            //this.setState({valueForQRCode: (text._id).toString()})
+            console.log('Innn')
+            
+            })
+            .catch(err=>{
+            console.log(err)
+            })
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    */

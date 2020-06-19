@@ -10,7 +10,9 @@ const MapNavigator = createStackNavigator (
     },
     {
         initialRouteName: 'MapScreen',
-        headerMode:'none'
+        headerMode:'none',
+        header:null,
+        lazy :true
     }
 )
 
