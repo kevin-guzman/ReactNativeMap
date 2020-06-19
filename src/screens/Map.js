@@ -33,24 +33,10 @@ import OdontologiaMarker from '../utils/Img/MapMarkers/OdontologiaMarker.png'
 class App extends Component {
 
     constructor (props){
-
-    
     super(props);
-
     /* setInterval(() => {
       this._getLocationAsync();
     }, 200); */
-
-   /*  setInterval(() =>{
-      this.componentDidMount();    
-    },1000);
-
-    setInterval(() =>{
-      this.MapList();    
-    },1000); */
-
-
-
     this.state={
         Nombre:null,
         Hospitals:[],
@@ -76,7 +62,6 @@ class App extends Component {
     }
 
     async componentDidMount(){
-    
     /* const url = 'http://181.54.182.7:5000/api/hospitals'
     const response = await fetch(url)
     let data = await response.json()
@@ -112,8 +97,6 @@ class App extends Component {
             error => Alert.alert(error.message),
             { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
         ).catch(e=>console.log(e)) */
-
-        
     }
 
 
@@ -139,10 +122,11 @@ class App extends Component {
     }
 
     onMapPress = (MarkerCoord) =>{
+        const {navigation}=this.props
         //console.log('in')
         //Alert.alert("coordinates:" + JSON.stringify(MarkerCoord.nativeEvent.coordinate));
         let m= MarkerCoord.nativeEvent.coordinate
-        let coor=
+        /* let coor=
             {
                 lat: m.latitude,
                 lng: m.longitude,
@@ -154,7 +138,11 @@ class App extends Component {
         console.log('inx2')
         console.log(coor)
         this.setState({KeyRefresh: this.state.KeyRefresh +1})
-        this.sendMarker(m)
+        this.sendMarker(m) */
+        navigation.navigate('AddMarker',{
+            lat: m.latitude,
+            lng: m.longitude
+        }) //this.props.navigation
 
     }
 
