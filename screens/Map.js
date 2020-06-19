@@ -20,10 +20,11 @@ import
 import Geolocation from '@react-native-community/geolocation';
 
 import Reload from '../Img/Reload.png'
-import RenderMap from '../components/RenderMap';
-/* import CovidMarker from '../Img/MapMarkers/CovidMarker.png'
+import RenderMap from '../components/Map/RenderMap';
+import ButtonMap from '../components/Map/ButtonsMap';
+import CovidMarker from '../Img/MapMarkers/CovidMarker.png'
 import GeneralMarker from '../Img/MapMarkers/GeneralMarker.png'
-import OdontologiaMarker from '../Img/MapMarkers/OdontologiaMarker.png' */
+import OdontologiaMarker from '../Img/MapMarkers/OdontologiaMarker.png'
 
 
 
@@ -153,8 +154,14 @@ class App extends Component {
                             )
 
     } */
+    
+    touchedOpacity = (ref) =>{
+        this.setState({
+            //KeyRefresh: this.state.KeyRefresh+1,
+            HospitalCategory: ref
+        })
 
-
+    }
 
     render(){
 
@@ -177,62 +184,32 @@ class App extends Component {
                 
 
                 <View style={styles.footer} >
-                    <View style={styles.viewTouchable} >
+                    <ButtonMap
+                        touchedOpacity={this.touchedOpacity}
+                        title="Odontologia"
+                        Img={OdontologiaMarker}
+                        bgColor='rgba(71,185,219,0.5)'
+                        brColor='rgba(26,100,122,0.8)'
+                    />
+                    <ButtonMap
+                        touchedOpacity={this.touchedOpacity}
+                        title="Covid"
+                        Img={CovidMarker}
+                        bgColor='rgba(91,225,100,0.5)'
+                        brColor='rgba(44,129,49,0.8)'
+                    />
+                    <ButtonMap
+                        touchedOpacity={this.touchedOpacity}
+                        title="General"
+                        Img={GeneralMarker}
+                        bgColor='rgba(71,185,219,0.5)'
+                        borColor='rgba(26,100,122,0.8)'
+                    />
+                    <View style={{fle:1,marginTop:'1%',  alignItems:'flex-end', marginHorizontal:'0%'}} >
                         <TouchableOpacity
-                        onPress={(KeyRefresh)=> this.setState({HospitalCategory: 'Odontologia', KeyRefresh: KeyRefresh+1})
-                        }
-                        style={{
-                                borderRadius:50,
-                                borderColor:'rgba(26,100,122,0.8)',
-                                backgroundColor:'rgba(71,185,219,0.5)',
-                                borderWidth:1,
-                                margin:'3%',
-                                }}
-                        >
-                        <Text style={styles.textTouchable} >
-                            Odontología
-                        </Text>
-                        </TouchableOpacity>
-                    </View>
-
-                    <View style={styles.viewTouchable} >
-                        <TouchableOpacity
-                        onPress={(KeyRefresh)=> this.setState({HospitalCategory: 'Covid', KeyRefresh: KeyRefresh+1})}
-                        style={{
-                                borderRadius:50,
-                                borderColor:'rgba(44,129,49,0.8)',
-                                backgroundColor:'rgba(91,225,100,0.5)',
-                                borderWidth:1,
-                                margin:'3%',
-                                }}
-                        >
-                        <Text style={styles.textTouchable} >
-                            Covid
-                        </Text>
-                        </TouchableOpacity>
-                    </View>
-
-                    <View style={styles.viewTouchable} >
-                        <TouchableOpacity
-                        onPress={(KeyRefresh)=> this.setState({HospitalCategory: 'General', KeyRefresh: KeyRefresh+1})}
-                        style={{
-                                borderRadius:50,
-                                borderColor:'rgba(131,39,39,10.8)',
-                                backgroundColor:'rgba(214,67,67,0.5)',
-                                borderWidth:1,
-                                margin:'3%',
-                                }}
-                        >
-                        <Text style={styles.textTouchable} >
-                            General
-                        </Text>
-                        </TouchableOpacity>
-                    </View>
-
-                    <View style={{flex:1,  /* marginTop:'8%', */ alignItems:'flex-end', marginHorizontal:'1%'}} >
-                        <TouchableOpacity
-                        onPress={(KeyRefresh)=> this.setState({HospitalCategory: 'NoSelected', KeyRefresh: KeyRefresh+1})} //this.componentDidMount()
-                        
+                            onPress={(KeyRefresh)=> this.setState({
+                                HospitalCategory: 'NoSelected', KeyRefresh: KeyRefresh+1}
+                            )} //this.componentDidMount()
                         >
                         <Image 
                             source={Reload}
@@ -240,8 +217,10 @@ class App extends Component {
                         >
                         </Image>                
                         </TouchableOpacity>
-                    </View> 
-                    </View>
+                </View>
+                    
+                </View>
+                
 
             
             </View>
@@ -317,6 +296,69 @@ export default App
 
 
 /* 
+<View style={styles.viewTouchable} >
+                        <TouchableOpacity
+                        onPress={(KeyRefresh)=> this.setState({HospitalCategory: 'Odontologia', KeyRefresh: KeyRefresh+1})
+                        }
+                        style={{
+                                borderRadius:50,
+                                borderColor:'rgba(26,100,122,0.8)',
+                                backgroundColor:'rgba(71,185,219,0.5)',
+                                borderWidth:1,
+                                margin:'3%',
+                                }}
+                        >
+                        <Text style={styles.textTouchable} >
+                            Odontología
+                        </Text>
+                        </TouchableOpacity>
+                    </View>
 
+                    <View style={styles.viewTouchable} >
+                        <TouchableOpacity
+                        onPress={(KeyRefresh)=> this.setState({HospitalCategory: 'Covid', KeyRefresh: KeyRefresh+1})}
+                        style={{
+                                borderRadius:50,
+                                borderColor:'rgba(44,129,49,0.8)',
+                                backgroundColor:'rgba(91,225,100,0.5)',
+                                borderWidth:1,
+                                margin:'3%',
+                                }}
+                        >
+                        <Text style={styles.textTouchable} >
+                            Covid
+                        </Text>
+                        </TouchableOpacity>
+                    </View>
+
+                    <View style={styles.viewTouchable} >
+                        <TouchableOpacity
+                        onPress={(KeyRefresh)=> this.setState({HospitalCategory: 'General', KeyRefresh: KeyRefresh+1})}
+                        style={{
+                                borderRadius:50,
+                                borderColor:'rgba(131,39,39,10.8)',
+                                backgroundColor:'rgba(214,67,67,0.5)',
+                                borderWidth:1,
+                                margin:'3%',
+                                }}
+                        >
+                        <Text style={styles.textTouchable} >
+                            General
+                        </Text>
+                        </TouchableOpacity>
+                    </View>
+
+                    <View style={{flex:1,   marginTop:'8%',  alignItems:'flex-end', marginHorizontal:'1%'}} >
+                    <TouchableOpacity
+                    onPress={(KeyRefresh)=> this.setState({HospitalCategory: 'NoSelected', KeyRefresh: KeyRefresh+1})} //this.componentDidMount()
+                    
+                    >
+                    <Image 
+                        source={Reload}
+                        style={styles.image}
+                    >
+                    </Image>                
+                    </TouchableOpacity>
+                </View> 
 */
 

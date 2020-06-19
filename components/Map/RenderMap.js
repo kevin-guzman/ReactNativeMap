@@ -53,7 +53,7 @@ let RenderMap = (props) =>{
                                         <Image
                                             /* onLoad={() => this.forceUpdate()}
                                             onLayout={() => this.forceUpdate()} */
-                                            source={require('../Img/MapMarkers/CovidMarker.png')}
+                                            source={require('../../Img/MapMarkers/CovidMarker.png')}
                                             style={styles.markerImage}
                                             >
                                         </Image>
@@ -62,7 +62,7 @@ let RenderMap = (props) =>{
                                         <Image
                                         /* onLoad={() => this.forceUpdate()}
                                         onLayout={() => this.forceUpdate()} */
-                                        source={require('../Img/MapMarkers/GeneralMarker.png')}
+                                        source={require('../../Img/MapMarkers/GeneralMarker.png')}
                                         style={styles.markerImage}
                                         >
                                         </Image>                              
@@ -71,7 +71,7 @@ let RenderMap = (props) =>{
                                         <Image
                                         /* onLoad={() => this.forceUpdate()}
                                         onLayout={() => this.forceUpdate()} */
-                                        source={require('../Img/MapMarkers/OdontologiaMarker.png')}
+                                        source={require('../../Img/MapMarkers/OdontologiaMarker.png')}
                                         style={styles.markerImage}
                                         >
                                         </Image>
@@ -79,7 +79,7 @@ let RenderMap = (props) =>{
                                         <Image
                                             /* onLoad={() => this.forceUpdate()}
                                             onLayout={() => this.forceUpdate()} */
-                                            source={require('../Img/MapMarkers/Undefined.png')}
+                                            source={require('../../Img/MapMarkers/Undefined.png')}
                                             style={styles.markerImage}
                                         >
                                         </Image>                                
