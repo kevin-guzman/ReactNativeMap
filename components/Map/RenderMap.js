@@ -94,62 +94,26 @@ let RenderMap = (props) =>{
 }
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      //backgroundColor: '#fff',
-      //marginTop: StatusBar.currentHeight
-      //paddingTop:'15%',
-  
-      //flexDirection:'row'
-      
-    },
-  
-    viewTouchable:{
-      marginHorizontal:'1%',
-      alignSelf:'center',
-    },
-  
-    textTouchable:{
-      textAlign:'center', 
-      margin:'3%'
-    },
-  
     markerImage:{
-      width:70,
-      height:70
+        width:70,
+        height:70
     },
-  
     mapStyle:{
-      flex:1,
-      //width:'90%',
-      //height:'80%'
-      
+        flex:1,
     },
-  
     mapContainer:{
-      flex:10,
-      borderColor:'black',
-      borderWidth:1,
-      marginHorizontal:'3%',
-      //marginVertical:'7%',
-      width:'95%',
-      height:'90%',
-      borderRadius:4,
+        flex:10,
+        borderColor:'black',
+        borderWidth:1,
+        marginHorizontal:'3%',
+        width:'95%',
+        height:'90%',
+        borderRadius:4,
     },
-  
     image:{
-      width:45,
-      height:45,
-      borderRadius:30,
-      //flex:1
+        width:45,
+        height:45,
+        borderRadius:30,
     },
-  
-    footer:{
-      flexDirection:'row',
-      //justifyContent:'space-between',
-      //marginVertical:'4%'
-    },
-  
-  });
-
-  export default RenderMap;
+});
+export default RenderMap;

@@ -175,14 +175,13 @@ class App extends Component {
         
         return (
             <View style={styles.container}>
-                
+                <View style={styles.mapContainer}  >
                     <RenderMap
                         Hospitals={this.state.Hospitals}
                         refreshScreen={this.state.KeyRefresh}
                         HospitalCategory={this.state.HospitalCategory}
                     />
-                
-
+                </View>
                 <View style={styles.footer} >
                     <ButtonMap
                         touchedOpacity={this.touchedOpacity}
@@ -211,13 +210,12 @@ class App extends Component {
                                 HospitalCategory: 'NoSelected', KeyRefresh: KeyRefresh+1}
                             )} //this.componentDidMount()
                         >
-                        <Image 
-                            source={Reload}
-                            style={styles.image}
-                        >
-                        </Image>                
+                            <Image 
+                                source={Reload}
+                                style={styles.image}
+                            />            
                         </TouchableOpacity>
-                </View>
+                    </View>
                     
                 </View>
                 
