@@ -19,4 +19,10 @@ press on "Guardar marcador" button. Then you could see the marker on the map (Th
 
 Some screenshots of the app:
 
-![MapView](/Git_Imagess/MapView1.png)
+![MapView](/Git_Imagess/MapView1.png?raw=true "MapView1")
+
+
+<p align="center">
+  <img src=/Git_Imagess/MapView1.png" width="350" title="hover text">
+  <img src="/Git_Imagess/MapView1.png" width="350" alt="accessibility text">
+</p>
