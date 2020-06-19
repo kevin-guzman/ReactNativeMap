@@ -16,3 +16,7 @@ How it works?
 press on "Guardar marcador" button. Then you could see the marker on the map (The initial region is in my natal city Bogotá Colombia)
 - This app send the selected coords to a api and then the app reads the api posts
 - There are 4 buttons on the map screen when you press some of these you can see in the map the hospitals that have te info button type
+
+Some screenshots of the app:
+
+![MapView](/Git_Imagess/MapView1.png)
