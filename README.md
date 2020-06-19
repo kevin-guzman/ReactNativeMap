@@ -2,11 +2,11 @@
 
 Dependencies:
 Go to folder proyect and write the following commands
-1. npm install react-native-paper
-2. npm install react-navigation
-3. npm install react-native-reanimated react-native-gesture-handler react-native-screens react-native-safe-area-context @react-native-community/masked-view
-4. npm install react-navigation-stack @react-native-community/masked-view react-native-safe-area-context
-5. npm install react-native-maps --save-exact
+- npm install react-native-paper
+- npm install react-navigation
+- npm install react-native-reanimated react-native-gesture-handler react-native-screens react-native-safe-area-context @react-native-community/masked-view
+- npm install react-navigation-stack @react-native-community/masked-view react-native-safe-area-context
+- npm install react-native-maps --save-exact
 And thats all
 
 Runing on android device or emulator:
