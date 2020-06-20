@@ -87,7 +87,7 @@ class AddMarker extends Component{
                     <Title
                         style={{alignSelf:"center", marginTop:50}}
                     >
-                        ¡Agregar tu marcador!
+                        ¡Agrega tu marcador!
                     </Title>
                     <TextInput
                         style={{marginHorizontal:'5%', marginTop:20}}
