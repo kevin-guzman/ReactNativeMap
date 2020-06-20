@@ -19,11 +19,11 @@ press on "Guardar marcador" button. Then you could see the marker on the map (Th
 
 Some screenshots of the app:
 
-![MapView](/Git_Imagess/MapView1.png?raw=true "MapView1")
+![MapView](https://github.com/kevin-guzman/ReactNativeMap/blob/master/Git_Images/AddMarker.png)
 
 
 
-<img src="/Git_Imagess/MapView1.png" width="350" title="hover text" width="25%">
+<img src="https://github.com/kevin-guzman/ReactNativeMap/blob/master/Git_Images/AddMarker.png" width="350" title="hover text" width="25%">
 </img>
 
                                                                            
