@@ -23,9 +23,9 @@ class App extends Component {
 
     constructor (props){
     super(props);
-    /*  setInterval(() => {
-      this.Reading();
-    }, 2000);  */
+    setInterval(() => {
+        this.Reading();
+    }, 200); 
     this.state={
         Nombre:null,
         Hospitals:[ 
@@ -54,16 +54,13 @@ class App extends Component {
         }
     }
 
-    Reading = async(KeyRefresh) =>{
-        this.setState({
-            HospitalCategory: 'NoSelected', KeyRefresh: KeyRefresh+1
-        })
+    Reading = async() =>{
         try {
             const myArray = await AsyncStorage.getItem('Markers');
             if (myArray !== null) {
               // We have data!!
-                console.log('Async');
-                console.log(JSON.parse(myArray));
+                //console.log('Async');
+                //console.log(JSON.parse(myArray));
                 console.log(this.state.Hospitals)
                 this.setState({Hospitals: JSON.parse(myArray)})
             }
@@ -134,8 +131,10 @@ class App extends Component {
                     />
                     <View style={{fle:1,marginTop:'1%',  alignItems:'flex-end', marginHorizontal:'0%'}} >
                         <TouchableOpacity
-                            onPress={(KeyRefresh)=> this.Reading(KeyRefresh)
-                                
+                            onPress={(KeyRefresh)=> //this.Reading(KeyRefresh)
+                                this.setState({
+                                    HospitalCategory: 'NoSelected', KeyRefresh: KeyRefresh+1
+                                })
                             } //this.componentDidMount()
                         >
                             <Image 
