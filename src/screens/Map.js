@@ -23,9 +23,11 @@ class App extends Component {
 
     constructor (props){
     super(props);
+    // Este set interval es para actualizar los marcadores del mapa, remover si usa muchos recursos (Para
+    //actualizar se puede con el boton azul de la parte inferior de la app).
     setInterval(() => {
         this.Reading();
-    }, 200); 
+    }, 2000); 
     this.state={
         Nombre:null,
         Hospitals:[ 
@@ -44,11 +46,13 @@ class App extends Component {
         KeyRefresh:1,
         };
     }
+    
+    comp
 
     componentDidMount = async() =>{
         try {
             await AsyncStorage.setItem('Markers', JSON.stringify(this.state.Hospitals));
-            console.log('pushed')
+            //console.log('pushed')
         } catch (error) {
             Alert.alert(error)
         }
@@ -58,10 +62,9 @@ class App extends Component {
         try {
             const myArray = await AsyncStorage.getItem('Markers');
             if (myArray !== null) {
-              // We have data!!
                 //console.log('Async');
                 //console.log(JSON.parse(myArray));
-                console.log(this.state.Hospitals)
+                //console.log(this.state.Hospitals)
                 this.setState({Hospitals: JSON.parse(myArray)})
             }
         } catch (error) {
@@ -131,10 +134,12 @@ class App extends Component {
                     />
                     <View style={{fle:1,marginTop:'1%',  alignItems:'flex-end', marginHorizontal:'0%'}} >
                         <TouchableOpacity
-                            onPress={(KeyRefresh)=> //this.Reading(KeyRefresh)
+                            onPress={(KeyRefresh)=>{ //this.Reading(KeyRefresh)
                                 this.setState({
                                     HospitalCategory: 'NoSelected', KeyRefresh: KeyRefresh+1
                                 })
+                                this.Reading()
+                            }
                             } //this.componentDidMount()
                         >
                             <Image 
