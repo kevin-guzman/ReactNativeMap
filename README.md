@@ -20,8 +20,8 @@ press on "Guardar marcador" button. Then you could see the marker on the map (Th
 Some screenshots of the app:
 
 
-<img src="https://github.com/kevin-guzman/ReactNativeMap/blob/master/Git_Images/AddMarker.png" width="350" title="hover text" width="25%">
-</img>
+| <img src="https://github.com/kevin-guzman/ReactNativeMap/blob/master/Git_Images/AddingMarker.png" width="280" title="hover text" width="25%">
+</img> | <img src="https://github.com/kevin-guzman/ReactNativeMap/blob/master/Git_Images/ViewingMarker1.png" width="280" title="hover text" width="25%">
+</img> | </img> | <img src="https://github.com/kevin-guzman/ReactNativeMap/blob/master/Git_Images/ViewingMarker2.png" width="280" title="hover text" width="25%">
+</img> |
 
-                                                                           
- <img src="https://cloud.githubusercontent.com/assets/4307137/10105283/251b6868-63ae-11e5-9918-b789d9d682ec.png" width="15%"></img>
