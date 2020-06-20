@@ -99,20 +99,19 @@ class AddMarker extends Component{
                         label='Escribe La direccion del marcador'
                         onChangeText={(MarkerAdress)=> this.setState({MarkerAdress})} 
                     />
-                    <View>
-
+                    <View style={styles.picker} >
+                        <Picker
+                            selectedValue= {(this.state && this.state.MarkerType) || 'a'} //{this.state.selectedItem}
+                            onValueChange={(x,i)=>{
+                                this.setState({MarkerType: x, selectedItem: x})
+                                console.log(x)
+                            }}
+                            
+                        >
+                            {this.markerTypeList()}
+                        </Picker>
                     </View>
-                    <Picker
-                        style={{marginTop: 15, marginTop: '10%',marginHorizontal:'5%'}}
-                        selectedValue= {(this.state && this.state.MarkerType) || 'a'} //{this.state.selectedItem}
-                        onValueChange={(x,i)=>{
-                            this.setState({MarkerType: x, selectedItem: x})
-                            console.log(x)
-                        }}
-                        
-                    >
-                        {this.markerTypeList()}
-                    </Picker>
+                    
                     <View style={{marginVertical:'10%', alignSelf:'center', flexDirection:'row',marginHorizontal:'5%'}} >
                         <Button
                             onPress={()=>navigation.navigate('MapScreen')}
@@ -138,6 +137,13 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         marginTop: StatusBar.currentHeight
     },
+    picker:{
+        borderWidth:1,
+        borderColor:'gray',
+        marginTop: 15, 
+        marginTop: '10%',
+        marginHorizontal:'5%'
+    }
 
 })
 
