@@ -1,12 +1,9 @@
 import React, {Component} from 'react'
 import { 
     StyleSheet, 
-    Text, 
     View,
     StatusBar,
-    Alert,
 } from 'react-native';
-import AsyncStorage from '@react-native-community/async-storage';
 import { TextInput, Button, Title } from 'react-native-paper';
 import {Picker} from '@react-native-community/picker';
 import {connect} from 'react-redux'
@@ -44,34 +41,6 @@ class AddMarker extends Component{
         const {MarkerName} = this.state;
         const {MarkerType} = this.state;
         const {MarkerAdress} = this.state;
-        var category=0;
-
-        var M= await AsyncStorage.getItem('Markers');
-        M= JSON.parse(M)
-        
-        switch(MarkerType){
-            case "Covid":
-                category=1;
-                console.log('case1')
-            break;
-            case "Odontologia":
-                category=2
-                console.log('case2')
-            break;
-            case "General":
-                category=3
-                console.log('case3')
-            break;
-        }
-
-        var obj={
-            latitude: latitude,
-            longitude: longitude,
-            title: MarkerName,
-            address: MarkerAdress,
-            category: MarkerType
-        }
-
         this.props.addMarker(
             {
                 latitude: latitude,
@@ -81,15 +50,6 @@ class AddMarker extends Component{
                 category: MarkerType
             }
         )
-
-        M.push(obj)
-
-        /* try {
-            await AsyncStorage.setItem('Markers', JSON.stringify(M));
-        } catch (error) {
-            Alert.alert(error)
-        } */
-
         navigation.navigate('MapScreen')
     }
     render(){
@@ -168,36 +128,3 @@ export default connect(
     }
 )
 (AddMarker);
-
-
-
-
-
-
-/*Este código es para usarlo con una api :3*/ 
-
-        /* fetch('http://181.54.182.7:5000/api/hospitals', {
-            method: 'POST',
-            headers: {
-            Accept: 'application/json',
-            'Content-Type':'application/json',
-            },
-            body: JSON.stringify({
-                lat: latitude,
-                lng: longitude,
-                name: MarkerName,
-                address: "1",
-                category: category
-            })
-        })
-        .then((response) => response.json())
-            .then((text) => {
-            //console.log(text._id)
-            //console.log(text._id.toString())
-            //this.setState({valueForQRCode: (text._id).toString()})
-            console.log('Innn')
-            
-            })
-            .catch(err=>{
-                console.log(err)
-            }) */

@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import { 
     StyleSheet, 
-    Text, 
     View,
     StatusBar,
     TouchableOpacity,
@@ -18,9 +17,7 @@ import CovidMarker from '../utils/Img/MapMarkers/CovidMarker.png'
 import GeneralMarker from '../utils/Img/MapMarkers/GeneralMarker.png'
 import OdontologiaMarker from '../utils/Img/MapMarkers/OdontologiaMarker.png'
 
-
 class App extends Component {
-
     constructor (props){
     super(props);
     this.state={
@@ -41,14 +38,11 @@ class App extends Component {
         KeyRefresh:1,
         };
     }
-    
-    
     touchedOpacity = (ref) =>{
         this.setState({
             HospitalCategory: ref
         })
     }
-
     onMapPress = (MarkerCoord) =>{
         const {navigation}=this.props
         let m= MarkerCoord.nativeEvent.coordinate
@@ -58,24 +52,12 @@ class App extends Component {
             lng: m.longitude
         })
     }
-
-    render(){
-
-    const Bogotá_Coordinates ={ latitude: 4.6097100,
-                                longitude: -74.0817500,
-                                latitudeDelta: 0.27, /*0.0922*/
-                                longitudeDelta: 0.27, /*0.0421*/};
-    const {navigation}= this.props;
-    const {HospitalCategory} = this.state;
-    const {KeyRefresh} = this.state;
-        
+    render(){        
         return (
             <View style={styles.container} >
                 <View style={styles.mapContainer}  >
                     <RenderMap
                         Hospitals={ this.props.markers } // this.props.markers
-                        //this.state.Hospitals
-                        //refreshScreen={this.state.KeyRefresh}
                         HospitalCategory={this.state.HospitalCategory}
                         onMapPress={this.onMapPress}
                     />
@@ -118,18 +100,11 @@ class App extends Component {
                             />            
                         </TouchableOpacity>
                     </View>
-                    
                 </View>
-                
-
-            
             </View>
         );
     }
-
 }
-
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -163,104 +138,3 @@ export default connect(
     }
 ) 
 (App);
-
-
-
-
-/*Este código es para usarlo con una api :3*/ 
-
-
-/*
-async componentDidMount(){
-
-        
-
-
-     const url = 'http://181.54.182.7:5000/api/hospitals'
-    const response = await fetch(url)
-    let data = await response.json()
-    //console.log(data)
-        this.setState({
-            Mapa:data
-        })
-
-        let DataRead = this.state.Mapa 
-        let Go  = []
-        DataRead.map(function(arr){
-            
-        const obj={
-            latitude:arr.lat,
-            longitude:arr.lng,
-            title:arr.name,
-            address:arr.address,
-            category:arr.category
-            }
-            Go.push(obj)
-            //console.log(obj)
-        }) 
-        //this.setState({Hospitals:Go});  
-         await Geolocation.getCurrentPosition(
-            position => {
-                const location = JSON.stringify(position);
-                console.log(`Posicion: ${position}`);
-                this.setState({ location });
-            },
-            error => Alert.alert(error.message),
-            { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
-        ).catch(e=>console.log(e)) 
-    }
-
-    GoToQR = (HN,HA) =>{
-    const {navigation}= this.props;
-    navigation.navigate('QR', 
-                                {
-                                HospitalName: HN, 
-                                HospitalAddres:HA, 
-                                UserLatitude: this.state.UserLatitude, 
-                                UserLongitude: this.state.UserLongitude 
-                                }
-                            )
-    } 
-    
-    
-    
-
-
-    sendMarker = async(coor) =>{
-        fetch('http://181.54.182.7:5000/api/hospitals', {
-            method: 'POST',
-            headers: {
-            Accept: 'application/json',
-            'Content-Type':'application/json',
-            },
-            body: JSON.stringify({
-                lat:coor.latitude,
-                lng:m.longitude,
-                name:"Prueba",
-                address:"1",
-                category:"2"
-            })    
-        })
-        .then((response) => response.json())
-            .then((text) => {
-            //console.log(text._id)
-            //console.log(text._id.toString())
-            //this.setState({valueForQRCode: (text._id).toString()})
-            console.log('Innn')
-            
-            })
-            .catch(err=>{
-            console.log(err)
-            })
-    }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    */
