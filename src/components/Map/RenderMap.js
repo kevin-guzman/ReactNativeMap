@@ -28,12 +28,10 @@ let RenderMap = (props) =>{
     const [hospitalsF, setHospitalsF]= useState([])
 
     useEffect( ()=>{
-        console.log('Useeffect')
         const {HospitalCategory}= props
         const {Hospitals}= props
         if (HospitalCategory === 'NoSelected'){
             setHospitalsF(Hospitals)
-            console.log(hospitalsF)
         }else{
             console.log(HospitalCategory)
             //console.log(Hospitals)
@@ -41,12 +39,8 @@ let RenderMap = (props) =>{
                 x.category == HospitalCategory
             )
             setHospitalsF(HospitalsFiltred)
-            console.log(hospitalsF)
-            /* console.log(HospitalsFiltred)
-            setHospitalsF(HospitalsFiltred) */
-            //return HospitalsFiltred;
         }
-    },[props.HospitalCategory] )    
+    },[props.Hospitals,props.HospitalCategory] ) 
 
     return(
         <View 

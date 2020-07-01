@@ -9,6 +9,8 @@ import {
 import AsyncStorage from '@react-native-community/async-storage';
 import { TextInput, Button, Title } from 'react-native-paper';
 import {Picker} from '@react-native-community/picker';
+import {connect} from 'react-redux'
+import {addMarker, removeMarker} from '../reduxSrc/actions/markers'
 
 
 class AddMarker extends Component{
@@ -69,13 +71,24 @@ class AddMarker extends Component{
             address: MarkerAdress,
             category: MarkerType
         }
+
+        this.props.addMarker(
+            {
+                latitude: latitude,
+                longitude: longitude,
+                title: MarkerName,
+                address: MarkerAdress,
+                category: MarkerType
+            }
+        )
+
         M.push(obj)
 
-        try {
+        /* try {
             await AsyncStorage.setItem('Markers', JSON.stringify(M));
         } catch (error) {
             Alert.alert(error)
-        }
+        } */
 
         navigation.navigate('MapScreen')
     }
@@ -147,7 +160,14 @@ const styles = StyleSheet.create({
 
 })
 
-export default AddMarker;
+export default connect(
+    (state)=>({user:state.user, markers:state.markers}),
+    {
+        addMarker,
+        removeMarker
+    }
+)
+(AddMarker);
 
 
 

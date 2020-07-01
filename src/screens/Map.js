@@ -6,10 +6,10 @@ import {
     StatusBar,
     TouchableOpacity,
     Image,
-    Alert,
 } from 'react-native';
 
-import AsyncStorage from '@react-native-community/async-storage';
+import {connect} from 'react-redux'
+import {addMarker, removeMarker} from '../reduxSrc/actions/markers'
 //import Geolocation from '@react-native-community/geolocation';
 import Reload from '../utils/Img/Reload.png'
 import RenderMap from '../components/Map/RenderMap'
@@ -23,11 +23,6 @@ class App extends Component {
 
     constructor (props){
     super(props);
-    // Este set interval es para actualizar los marcadores del mapa, remover si usa muchos recursos (Para
-    //actualizar se puede con el boton azul de la parte inferior de la app).
-    setInterval(() => {
-        this.Reading();
-    }, 2000); 
     this.state={
         Nombre:null,
         Hospitals:[ 
@@ -47,34 +42,9 @@ class App extends Component {
         };
     }
     
-
-    componentDidMount = async() =>{
-        try {
-            await AsyncStorage.setItem('Markers', JSON.stringify(this.state.Hospitals));
-            //console.log('pushed')
-        } catch (error) {
-            Alert.alert(error)
-        }
-    }
-
-    Reading = async() =>{
-        try {
-            const myArray = await AsyncStorage.getItem('Markers');
-            if (myArray !== null) {
-                //console.log('Async');
-                //console.log(JSON.parse(myArray));
-                //console.log(this.state.Hospitals)
-                this.setState({Hospitals: JSON.parse(myArray)})
-            }
-        } catch (error) {
-            Alert.alert(error)
-        }
-    }
-    
     
     touchedOpacity = (ref) =>{
         this.setState({
-            //KeyRefresh: this.state.KeyRefresh+1,
             HospitalCategory: ref
         })
     }
@@ -88,8 +58,6 @@ class App extends Component {
             lng: m.longitude
         })
     }
-
-    
 
     render(){
 
@@ -105,8 +73,9 @@ class App extends Component {
             <View style={styles.container} >
                 <View style={styles.mapContainer}  >
                     <RenderMap
-                        Hospitals={ this.state.Hospitals }
-                        refreshScreen={this.state.KeyRefresh}
+                        Hospitals={ this.props.markers } // this.props.markers
+                        //this.state.Hospitals
+                        //refreshScreen={this.state.KeyRefresh}
                         HospitalCategory={this.state.HospitalCategory}
                         onMapPress={this.onMapPress}
                     />
@@ -137,11 +106,11 @@ class App extends Component {
                         <TouchableOpacity
                             onPress={(KeyRefresh)=>{ //this.Reading(KeyRefresh)
                                 this.setState({
-                                    HospitalCategory: 'NoSelected', KeyRefresh: KeyRefresh+1
+                                    HospitalCategory: 'NoSelected'
                                 })
-                                this.Reading()
-                            }
-                            } //this.componentDidMount()
+                                
+                                }
+                            } 
                         >
                             <Image 
                                 source={Reload}
@@ -184,11 +153,16 @@ const styles = StyleSheet.create({
     footer:{
         flexDirection:'row',
         flex:1,
-        //justifyContent:'space-between',
-        //marginVertical:'4%'
     },
 });
-export default App;
+export default connect(
+    (state)=>({user:state.user, markers:state.markers}),
+    {
+        addMarker,
+        removeMarker
+    }
+) 
+(App);
 
 
 
