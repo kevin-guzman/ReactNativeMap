@@ -31,9 +31,9 @@ class App extends Component {
     this.state={
         Nombre:null,
         Hospitals:[ 
-                    {latitude: 4.699050, longitude: -74.050105, category:1, title:'Tunal'},
-                    {latitude: 4.671959, longitude: -74.083579, category:2, title:'Chricales'},
-                    {latitude: 4.683959, longitude: -74.083579, category:3, title:'Country'},
+                    {latitude: 4.699050, longitude: -74.050105, category: 'General', title:'Tunal'},
+                    {latitude: 4.671959, longitude: -74.083579, category: 'Covid', title:'Chricales'},
+                    {latitude: 4.683959, longitude: -74.083579, category: 'Odontologia', title:'Country'},
                     {latitude: 4.671959, longitude: -74.050105, title:'Kennedy'},
         ], 
         Mapa:[],
@@ -89,6 +89,8 @@ class App extends Component {
         })
     }
 
+    
+
     render(){
 
     const Bogotá_Coordinates ={ latitude: 4.6097100,
@@ -103,7 +105,7 @@ class App extends Component {
             <View style={styles.container} >
                 <View style={styles.mapContainer}  >
                     <RenderMap
-                        Hospitals={this.state.Hospitals}
+                        Hospitals={ this.state.Hospitals }
                         refreshScreen={this.state.KeyRefresh}
                         HospitalCategory={this.state.HospitalCategory}
                         onMapPress={this.onMapPress}

@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, {Component, useState, useEffect} from 'react'
 import { 
     StyleSheet, 
     View,
@@ -13,13 +13,41 @@ import
     GOOGLE_MAPS_APIKEY,       
 } from 'react-native-maps'; 
 
+import CovidMarker from '../../utils/Img/MapMarkers/CovidMarker.png'
+import GeneralMarker from '../../utils/Img/MapMarkers/GeneralMarker.png'
+import OdontologiaMarker from '../../utils/Img/MapMarkers/OdontologiaMarker.png'
+import UndefinedMarker from '../../utils/Img/MapMarkers/Undefined.png'
+
 const Bogotá_Coordinates ={ latitude: 4.6097100,
     longitude: -74.0817500,
     latitudeDelta: 0.27, /*0.0922*/
     longitudeDelta: 0.27, /*0.0421*/};
 
 let RenderMap = (props) =>{
-    const {HospitalCategory}= props
+    
+    const [hospitalsF, setHospitalsF]= useState([])
+
+    useEffect( ()=>{
+        console.log('Useeffect')
+        const {HospitalCategory}= props
+        const {Hospitals}= props
+        if (HospitalCategory === 'NoSelected'){
+            setHospitalsF(Hospitals)
+            console.log(hospitalsF)
+        }else{
+            console.log(HospitalCategory)
+            //console.log(Hospitals)
+            let HospitalsFiltred = Hospitals.filter(x=>
+                x.category == HospitalCategory
+            )
+            setHospitalsF(HospitalsFiltred)
+            console.log(hospitalsF)
+            /* console.log(HospitalsFiltred)
+            setHospitalsF(HospitalsFiltred) */
+            //return HospitalsFiltred;
+        }
+    },[props.HospitalCategory] )    
+
     return(
         <View 
             key={props.refreshScreen} 
@@ -30,10 +58,9 @@ let RenderMap = (props) =>{
                 showsUserLocation={true}
                 initialRegion={Bogotá_Coordinates}
                 onPress={(c)=>props.onMapPress(c)}
-                //onPress={this.onMapPress.bind(this)}
             >
                 {
-                    props.Hospitals.map( (x,i) =>{    
+                    hospitalsF.map( (x,i) =>{    //props.Hospitals
                         return(
                             <Marker 
                             coordinate={
@@ -47,41 +74,33 @@ let RenderMap = (props) =>{
                             /* onCalloutPress={()=> this.GoToQR(x.title,x.address)} */
                             >
                                 {
-                                    (x.category === 1 && HospitalCategory === 'Covid' ) || (HospitalCategory === 'NoSelected' && x.category === 1) ?
+                                    x.category === undefined ?
                                         <Image
-                                            /* onLoad={() => this.forceUpdate()}
-                                            onLayout={() => this.forceUpdate()} */
-                                            source={require('../../utils/Img/MapMarkers/CovidMarker.png')}
+                                            source={UndefinedMarker}
                                             style={styles.markerImage}
-                                            >
-                                        </Image>
+                                        />
                                     :
-                                    (x.category === 2 && HospitalCategory === 'General' ) || (HospitalCategory === 'NoSelected' && x.category === 2) ?
+                                    x.category === 'Covid' ?
                                         <Image
-                                        /* onLoad={() => this.forceUpdate()}
-                                        onLayout={() => this.forceUpdate()} */
-                                        source={require('../../utils/Img/MapMarkers/GeneralMarker.png')}
-                                        style={styles.markerImage}
-                                        >
-                                        </Image>                              
-                                    :
-                                    (x.category === 3 && HospitalCategory === 'Odontologia' ) || (HospitalCategory === 'NoSelected' && x.category === 3) ?
-                                        <Image
-                                        /* onLoad={() => this.forceUpdate()}
-                                        onLayout={() => this.forceUpdate()} */
-                                        source={require('../../utils/Img/MapMarkers/OdontologiaMarker.png')}
-                                        style={styles.markerImage}
-                                        >
-                                        </Image>
-                                    :
-                                        <Image
-                                            /* onLoad={() => this.forceUpdate()}
-                                            onLayout={() => this.forceUpdate()} */
-                                            source={require('../../utils/Img/MapMarkers/Undefined.png')}
+                                            source={CovidMarker}
                                             style={styles.markerImage}
-                                        >
-                                        </Image>                                
-                            }
+                                        />
+                                    :
+                                    x.category === 'General'?
+                                        <Image
+                                            source={GeneralMarker}
+                                            style={styles.markerImage}
+                                        />
+                                    :
+                                    x.category === 'Odontologia'?
+                                        <Image
+                                            source={OdontologiaMarker}
+                                            style={styles.markerImage}
+                                        />
+                                    :
+                                    null
+                                }
+                                
                             </Marker>
                         )
                     } )

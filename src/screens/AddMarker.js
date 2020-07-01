@@ -67,7 +67,7 @@ class AddMarker extends Component{
             longitude: longitude,
             title: MarkerName,
             address: MarkerAdress,
-            category: category
+            category: MarkerType
         }
         M.push(obj)
 
