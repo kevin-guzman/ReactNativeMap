@@ -1,4 +1,4 @@
-import React, {Component, useState, useEffect} from 'react'
+import React, {useState, useEffect} from 'react'
 import { 
     StyleSheet, 
     View,
@@ -13,6 +13,7 @@ import
     GOOGLE_MAPS_APIKEY,       
 } from 'react-native-maps'; 
 
+//Markers Images
 import CovidMarker from '../../utils/Img/MapMarkers/CovidMarker.png'
 import GeneralMarker from '../../utils/Img/MapMarkers/GeneralMarker.png'
 import OdontologiaMarker from '../../utils/Img/MapMarkers/OdontologiaMarker.png'
@@ -24,9 +25,7 @@ const Bogotá_Coordinates ={ latitude: 4.6097100,
     longitudeDelta: 0.27, /*0.0421*/};
 
 let RenderMap = (props) =>{
-    
     const [hospitalsF, setHospitalsF]= useState([])
-
     useEffect( ()=>{
         const {HospitalCategory}= props
         const {Hospitals}= props
@@ -54,7 +53,7 @@ let RenderMap = (props) =>{
                 onPress={(c)=>props.onMapPress(c)}
             >
                 {
-                    hospitalsF.map( (x,i) =>{    //props.Hospitals
+                    hospitalsF.map( (x,i) =>{
                         return(
                             <Marker 
                             coordinate={

@@ -6,13 +6,15 @@ import {
     TouchableOpacity,
     Image,
 } from 'react-native';
-
+//import Geolocation from '@react-native-community/geolocation';
+//Redux
 import {connect} from 'react-redux'
 import {addMarker, removeMarker} from '../reduxSrc/actions/markers'
-//import Geolocation from '@react-native-community/geolocation';
-import Reload from '../utils/Img/Reload.png'
+//Components
 import RenderMap from '../components/Map/RenderMap'
 import ButtonMap from '../components/Map/ButtonsMap'
+//Images
+import Reload from '../utils/Img/Reload.png'
 import CovidMarker from '../utils/Img/MapMarkers/CovidMarker.png'
 import GeneralMarker from '../utils/Img/MapMarkers/GeneralMarker.png'
 import OdontologiaMarker from '../utils/Img/MapMarkers/OdontologiaMarker.png'
