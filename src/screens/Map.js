@@ -1,4 +1,4 @@
-import React, {Component, useState, useEffect} from 'react'
+import React, {Component, useState, useEffect, useRef} from 'react'
 import { 
     StyleSheet, 
     View,
@@ -18,11 +18,22 @@ import Reload from '../utils/Img/Reload.png'
 import CovidMarker from '../utils/Img/MapMarkers/CovidMarker.png'
 import GeneralMarker from '../utils/Img/MapMarkers/GeneralMarker.png'
 import OdontologiaMarker from '../utils/Img/MapMarkers/OdontologiaMarker.png'
+import Geolocation from '@react-native-community/geolocation';
+
 
 
 let Mapa = (props) =>{
     const {navigation}=props
     const [hospitalCategory, sethospitalCategory]= useState('NoSelected')
+    const [initialRegion, setInitialRegion] = useState(
+        {latitude: 5.6097100,
+        longitude: -74.0817500,
+        latitudeDelta: 0.27, /*0.0922*/
+        longitudeDelta: 0.27, /*0.0421*/}
+    )
+    
+    let mapRef = useRef()
+    
 
     const onMapPress = (MarkerCoord) =>{
         let m = MarkerCoord.nativeEvent.coordinate
@@ -35,15 +46,31 @@ let Mapa = (props) =>{
         sethospitalCategory(ref)
     }
 
-    
+    useEffect(()=>{
+        GetLocation()
+    },[])
+
+    const GetLocation = async () =>{
+        await Geolocation.getCurrentPosition(
+            pos => setInitialRegion(
+                {
+                    latitude: pos.coords.latitude,
+                    longitude: pos.coords.longitude,
+                    latitudeDelta: 0.27, /*0.0922*/
+                    longitudeDelta: 0.27, /*0.0421*/
+                }
+            )
+        )
+    } 
 
     return(
         <View style={styles.container} >
             <View style={styles.mapContainer}  >
                 <RenderMap
-                    Hospitals={ props.markers } // this.props.markers
+                    Hospitals={ props.markers }
                     HospitalCategory={hospitalCategory}
                     onMapPress={onMapPress}
+                    initialRegion={initialRegion}
                 />
             </View>
             <View style={styles.footer} >

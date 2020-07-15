@@ -7,10 +7,6 @@ import {
 import  
     MapView,
     {Marker,
-    Polyline,
-    Callout,
-    PROVIDER_GOOGLE,
-    GOOGLE_MAPS_APIKEY,       
 } from 'react-native-maps'; 
 
 //Markers Images
@@ -19,27 +15,23 @@ import GeneralMarker from '../../utils/Img/MapMarkers/GeneralMarker.png'
 import OdontologiaMarker from '../../utils/Img/MapMarkers/OdontologiaMarker.png'
 import UndefinedMarker from '../../utils/Img/MapMarkers/Undefined.png'
 
-const Bogotá_Coordinates ={ latitude: 4.6097100,
-    longitude: -74.0817500,
-    latitudeDelta: 0.27, /*0.0922*/
-    longitudeDelta: 0.27, /*0.0421*/};
 
 let RenderMap = (props) =>{
     const [hospitalsF, setHospitalsF]= useState([])
+    const [initialRegion, setinitialRegion]= useState(props.initialRegion)
     useEffect( ()=>{
         const {HospitalCategory}= props
         const {Hospitals}= props
+        setinitialRegion(props.initialRegion)
         if (HospitalCategory === 'NoSelected'){
             setHospitalsF(Hospitals)
         }else{
-            console.log(HospitalCategory)
-            //console.log(Hospitals)
             let HospitalsFiltred = Hospitals.filter(x=>
                 x.category == HospitalCategory
             )
             setHospitalsF(HospitalsFiltred)
         }
-    },[props.Hospitals,props.HospitalCategory] ) 
+    },[props.Hospitals,props.HospitalCategory, props.initialRegion] ) 
 
     return(
         <View 
@@ -49,9 +41,12 @@ let RenderMap = (props) =>{
             <MapView
                 style={styles.mapStyle}
                 showsUserLocation={true}
-                initialRegion={Bogotá_Coordinates}
+                initialRegion={initialRegion}
                 onPress={(c)=>props.onMapPress(c)}
+                followsUserLocation={true}
+                loadingEnabled={true}
             >
+                
                 {
                     hospitalsF.map( (x,i) =>{
                         return(
@@ -63,8 +58,6 @@ let RenderMap = (props) =>{
                             key={i}
                             title={x.title }
                             description={x.address}
-                            
-                            /* onCalloutPress={()=> this.GoToQR(x.title,x.address)} */
                             >
                                 {
                                     x.category === undefined ?
