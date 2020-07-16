@@ -81,16 +81,20 @@ const AddMarker = (props) => {
                 </View>
             </View>
             <View style={styles.footer} >
-                <Button
-                    onPress={()=>navigation.navigate('MapScreen')}
-                >
-                    Volver al mapa
-                </Button> 
-                <Button
-                    onPress={()=>Add()}
-                >
-                    Guardar marcador
-                </Button>
+                <View style={{flex:1}} >
+                    <Button
+                        onPress={()=>navigation.navigate('MapScreen')}
+                    >
+                        Volver
+                    </Button> 
+                </View>
+                <View style={{flex:1}} >
+                    <Button
+                        onPress={()=>Add()}
+                    >
+                        Guardar 
+                    </Button>
+                </View>
             </View>
         </View>
     )
@@ -99,7 +103,6 @@ const AddMarker = (props) => {
 const styles = StyleSheet.create({
     container:{
         flex: 1,
-        backgroundColor: '#fff',
         marginTop: StatusBar.currentHeight
     },
     picker:{
@@ -122,7 +125,6 @@ const styles = StyleSheet.create({
         marginVertical:'30%', 
         alignSelf:'center', 
         flexDirection:'row',
-        marginHorizontal:'5%',
     }
 })
 

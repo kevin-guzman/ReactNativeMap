@@ -35,7 +35,6 @@ let RenderMap = (props) =>{
 
     return(
         <View 
-            key={props.refreshScreen} 
             style={styles.mapStyle}
         >
             <MapView
@@ -103,15 +102,6 @@ const styles = StyleSheet.create({
     },
     mapStyle:{
         flex:1,
-    },
-    mapContainer:{
-        flex:10,
-        borderColor:'black',
-        borderWidth:1,
-        marginHorizontal:'3%',
-        width:'95%',
-        height:'90%',
-        borderRadius:4,
     },
     image:{
         width:45,

@@ -2,11 +2,9 @@ import React, {Component, useState, useEffect, useRef} from 'react'
 import { 
     StyleSheet, 
     View,
-    StatusBar,
     TouchableOpacity,
     Image,
 } from 'react-native';
-//import Geolocation from '@react-native-community/geolocation';
 //Redux
 import {connect} from 'react-redux'
 import {addMarker, removeMarker} from '../reduxSrc/actions/markers'
@@ -14,7 +12,7 @@ import {addMarker, removeMarker} from '../reduxSrc/actions/markers'
 import RenderMap from '../components/Map/RenderMap'
 import ButtonMap from '../components/Map/ButtonsMap'
 //Images
-import Reload from '../utils/Img/Reload.png'
+import Reload from '../utils/Img/Reload.jpg'
 import CovidMarker from '../utils/Img/MapMarkers/CovidMarker.png'
 import GeneralMarker from '../utils/Img/MapMarkers/GeneralMarker.png'
 import OdontologiaMarker from '../utils/Img/MapMarkers/OdontologiaMarker.png'
@@ -74,7 +72,8 @@ let Mapa = (props) =>{
                 />
             </View>
             <View style={styles.footer} >
-                <ButtonMap
+                <View style={{flex:2, flexDirection:'row', marginHorizontal:'1%'}} >
+                    <ButtonMap
                     touchedOpacity={touchedOpacity}
                     title="Odontologia"
                     Img={OdontologiaMarker}
@@ -95,15 +94,17 @@ let Mapa = (props) =>{
                     bgColor='rgba(71,185,219,0.5)'
                     borColor='rgba(26,100,122,0.8)'
                 />
-                <View style={{fle:1,marginTop:'1%',  alignItems:'flex-end', marginHorizontal:'0%'}} >
+                </View>
+                <View style={{flex:1, marginVertical:'3%',  alignItems:'flex-end', marginHorizontal:'1%', alignSelf:'center'}} >
                     <TouchableOpacity
                         onPress={()=> sethospitalCategory('NoSelected')} 
+                        //style={{flex:1,marginTop:'1%', marginHorizontal:'1%', alignSelf: "center"}}
                     >
                         <Image 
                             source={Reload}
                             style={styles.image}
                         />            
-                    </TouchableOpacity>
+                </TouchableOpacity>
                 </View>
             </View>
         </View>
@@ -113,22 +114,22 @@ let Mapa = (props) =>{
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: 'white',
-        marginTop: StatusBar.currentHeight
+        marginTop:'4%'
     },
     mapContainer:{
         flex:10,
         borderColor:'black',
         borderWidth:1,
-        marginHorizontal:'3%',
-        width:'95%',
+        width:'97%',
         height:'90%',
         borderRadius:4,
+        marginLeft:'1.5%',
     },
     image:{
-        width:45,
-        height:45,
+        width:35,
+        height:35,
         borderRadius:30,
+        marginHorizontal:'2%'
     },
     footer:{
         flexDirection:'row',
