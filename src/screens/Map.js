@@ -72,7 +72,7 @@ let Mapa = (props) =>{
                 />
             </View>
             <View style={styles.footer} >
-                <View style={{flex:2, flexDirection:'row', marginHorizontal:'1%'}} >
+                <View style={{flex:1, flexDirection:'row', marginHorizontal:'1%', justifyContent:'space-between'}} >
                     <ButtonMap
                     touchedOpacity={touchedOpacity}
                     title="Odontologia"
@@ -95,10 +95,9 @@ let Mapa = (props) =>{
                     borColor='rgba(26,100,122,0.8)'
                 />
                 </View>
-                <View style={{flex:1, marginVertical:'3%',  alignItems:'flex-end', marginHorizontal:'1%', alignSelf:'center'}} >
+                <View style={{flex:1, marginVertical:'3%', alignItems:'flex-end', marginHorizontal:'1%', alignSelf:'center' }} >
                     <TouchableOpacity
                         onPress={()=> sethospitalCategory('NoSelected')} 
-                        //style={{flex:1,marginTop:'1%', marginHorizontal:'1%', alignSelf: "center"}}
                     >
                         <Image 
                             source={Reload}
@@ -134,6 +133,7 @@ const styles = StyleSheet.create({
     footer:{
         flexDirection:'row',
         flex:1,
+        justifyContent:'space-between'
     },
 });
 export default connect(
