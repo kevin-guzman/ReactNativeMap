@@ -19,5 +19,7 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 50,
         alignItems: 'center',
         justifyContent: 'center',
+        
+        //alignSelf:'flex-end'
     },
 });
