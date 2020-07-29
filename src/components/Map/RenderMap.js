@@ -10,7 +10,7 @@ import
 } from 'react-native-maps'; 
 
 //Markers Images
-import CovidMarker from '../../utils/Img/MapMarkers/CovidMarker.png'
+import CovidMarker from '../../utils/Img/MapMarkers/CovidMarker.webp'
 import GeneralMarker from '../../utils/Img/MapMarkers/GeneralMarker.png'
 import OdontologiaMarker from '../../utils/Img/MapMarkers/OdontologiaMarker.png'
 import UndefinedMarker from '../../utils/Img/MapMarkers/Undefined.png'

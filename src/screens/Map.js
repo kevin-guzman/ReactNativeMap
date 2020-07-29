@@ -11,6 +11,7 @@ import {addMarker, removeMarker} from '../reduxSrc/actions/markers'
 //Components
 import RenderMap from '../components/Map/RenderMap'
 import ButtonMap from '../components/Map/ButtonsMap'
+import Loading from '../components/Loading'
 //Images
 import Reload from '../utils/Img/Reload.jpg'
 import CovidMarker from '../utils/Img/MapMarkers/CovidMarker.png'
@@ -23,15 +24,13 @@ import Geolocation from '@react-native-community/geolocation';
 let Mapa = (props) =>{
     const {navigation}=props
     const [hospitalCategory, sethospitalCategory]= useState('NoSelected')
-    const [initialRegion, setInitialRegion] = useState(
-        {latitude: 5.6097100,
+    const [initialRegion, setInitialRegion] = useState(null)
+        /* {latitude: 5.6097100,
         longitude: -74.0817500,
-        latitudeDelta: 0.27, /*0.0922*/
-        longitudeDelta: 0.27, /*0.0421*/}
-    )
-    
-    let mapRef = useRef()
-    
+        latitudeDelta: 0.27, 
+        longitudeDelta: 0.27, } */
+    /*0.0922*/
+    /*0.0421*/
 
     const onMapPress = (MarkerCoord) =>{
         let m = MarkerCoord.nativeEvent.coordinate
@@ -54,8 +53,8 @@ let Mapa = (props) =>{
                 {
                     latitude: pos.coords.latitude,
                     longitude: pos.coords.longitude,
-                    latitudeDelta: 0.27, /*0.0922*/
-                    longitudeDelta: 0.27, /*0.0421*/
+                    latitudeDelta: 0.017, /*0.0922*/
+                    longitudeDelta: 0.017, /*0.0421*/
                 }
             )
         )
@@ -64,46 +63,52 @@ let Mapa = (props) =>{
     return(
         <View style={styles.container} >
             <View style={styles.mapContainer}  >
-                <RenderMap
-                    Hospitals={ props.markers }
-                    HospitalCategory={hospitalCategory}
-                    onMapPress={onMapPress}
-                    initialRegion={initialRegion}
-                />
+                {
+                    initialRegion ? 
+                        <RenderMap
+                            Hospitals={ props.markers }
+                            HospitalCategory={hospitalCategory}
+                            onMapPress={onMapPress}
+                            initialRegion={initialRegion}
+                        />
+                    :
+                        <Loading/>
+                }
             </View>
             <View style={styles.footer} >
-                <View style={{flex:1, flexDirection:'row', marginHorizontal:'1%', justifyContent:'space-between'}} >
+                <View style={styles.footerLeft} >
                     <ButtonMap
-                    touchedOpacity={touchedOpacity}
-                    title="Odontologia"
-                    Img={OdontologiaMarker}
-                    bgColor='rgba(71,185,219,0.5)'
-                    brColor='rgba(26,100,122,0.8)'
-                />
-                <ButtonMap
-                    touchedOpacity={touchedOpacity}
-                    title="Covid"
-                    Img={CovidMarker}
-                    bgColor='rgba(91,225,100,0.5)'
-                    brColor='rgba(44,129,49,0.8)'
-                />
-                <ButtonMap
-                    touchedOpacity={touchedOpacity}
-                    title="General"
-                    Img={GeneralMarker}
-                    bgColor='rgba(71,185,219,0.5)'
-                    borColor='rgba(26,100,122,0.8)'
-                />
+                        touchedOpacity={touchedOpacity}
+                        title="Odontologia"
+                        Img={OdontologiaMarker}
+                        bgColor='rgba(71,185,219,0.5)'
+                        brColor='rgba(26,100,122,0.8)'
+                    />
+                    <ButtonMap
+                        touchedOpacity={touchedOpacity}
+                        title="Covid"
+                        Img={CovidMarker}
+                        bgColor='rgba(91,225,100,0.5)'
+                        brColor='rgba(44,129,49,0.8)'
+                    />
+                    <ButtonMap
+                        touchedOpacity={touchedOpacity}
+                        title="General"
+                        Img={GeneralMarker}
+                        bgColor='rgba(71,185,219,0.5)'
+                        borColor='rgba(26,100,122,0.8)'
+                    />
                 </View>
-                <View style={{flex:1, marginVertical:'3%', alignItems:'flex-end', marginHorizontal:'1%', alignSelf:'center' }} >
+
+                <View style={styles.footerRigth} >
                     <TouchableOpacity
-                        onPress={()=> sethospitalCategory('NoSelected')} 
-                    >
-                        <Image 
-                            source={Reload}
-                            style={styles.image}
-                        />            
-                </TouchableOpacity>
+                            onPress={()=> sethospitalCategory('NoSelected')} 
+                        >
+                            <Image 
+                                source={Reload}
+                                style={styles.image}
+                            />            
+                    </TouchableOpacity>
                 </View>
             </View>
         </View>
@@ -113,7 +118,7 @@ let Mapa = (props) =>{
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        marginTop:'4%'
+        marginTop:'2%'
     },
     mapContainer:{
         flex:10,
@@ -133,7 +138,21 @@ const styles = StyleSheet.create({
     footer:{
         flexDirection:'row',
         flex:1,
-        justifyContent:'space-between'
+        justifyContent:'space-between',
+        width:'100%'
+    },
+    footerLeft:{
+        flex:1,
+        flexDirection:'row', 
+        marginHorizontal:'1%', 
+        justifyContent:'space-between', 
+    },
+    footerRigth:{
+        flex:1,
+        marginVertical:'2%', 
+        alignItems:'flex-end', 
+        marginHorizontal:'1%', 
+        //alignSelf:'center'
     },
 });
 export default connect(

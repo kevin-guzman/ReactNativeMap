@@ -18,7 +18,7 @@ let ButtonMap = (props) =>{
                     marginVertical:'3%',
                     marginHorizontal:'1%',
                     flexDirection:"row",
-                    alignSelf:"center"
+                    //alignSelf:"center"
                     }}
             >
                 <Paragraph
@@ -37,7 +37,7 @@ let ButtonMap = (props) =>{
 
 const styles = StyleSheet.create({
     viewTouchable:{
-        marginVertical:'3%',
+        //marginVertical:'3%',
         alignSelf:'center',
         //flex:1
     },
