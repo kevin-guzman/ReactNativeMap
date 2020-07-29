@@ -1,13 +1,18 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, lazy} from 'react'
 import { 
     StyleSheet, 
     View,
     Image,
+    Text,
+    Alert
 } from 'react-native';
 import  
     MapView,
-    {Marker,
-} from 'react-native-maps'; 
+    {
+        Marker, 
+        Callout,
+    } 
+from 'react-native-maps'; 
 
 //Markers Images
 import CovidMarker from '../../utils/Img/MapMarkers/CovidMarker.webp'
@@ -32,6 +37,21 @@ let RenderMap = (props) =>{
             setHospitalsF(HospitalsFiltred)
         }
     },[props.Hospitals,props.HospitalCategory, props.initialRegion] ) 
+
+    function getRequireNameByCategory (category){
+        switch (category){
+            case 'Covid' :
+                return CovidMarker
+            case 'General' :
+                return GeneralMarker
+            case 'Odontologia' :
+                return OdontologiaMarker
+            default:
+                return UndefinedMarker
+        }
+
+    }
+    const Odontologia ='Odontologia'
 
     return(
         <View 
@@ -58,34 +78,13 @@ let RenderMap = (props) =>{
                             title={x.title }
                             description={x.address}
                             >
-                                {
-                                    x.category === undefined ?
-                                        <Image
-                                            source={UndefinedMarker}
-                                            style={styles.markerImage}
-                                        />
-                                    :
-                                    x.category === 'Covid' ?
-                                        <Image
-                                            source={CovidMarker}
-                                            style={styles.markerImage}
-                                        />
-                                    :
-                                    x.category === 'General'?
-                                        <Image
-                                            source={GeneralMarker}
-                                            style={styles.markerImage}
-                                        />
-                                    :
-                                    x.category === 'Odontologia'?
-                                        <Image
-                                            source={OdontologiaMarker}
-                                            style={styles.markerImage}
-                                        />
-                                    :
-                                    null
-                                }
-                                
+                                <Image
+                                    source={getRequireNameByCategory(x.category)}
+                                    style={styles.markerImage}
+                                    
+                                /> 
+                                <Callout onPress={()=>Alert.alert(JSON.stringify(x)) } >
+                                </Callout>
                             </Marker>
                         )
                     } )
