@@ -11,9 +11,9 @@ import
 
 //Markers Images
 import CovidMarker from '../../utils/Img/MapMarkers/CovidMarker.webp'
-import GeneralMarker from '../../utils/Img/MapMarkers/GeneralMarker.png'
-import OdontologiaMarker from '../../utils/Img/MapMarkers/OdontologiaMarker.png'
-import UndefinedMarker from '../../utils/Img/MapMarkers/Undefined.png'
+import GeneralMarker from '../../utils/Img/MapMarkers/GeneralMarker.webp'
+import OdontologiaMarker from '../../utils/Img/MapMarkers/OdontologiaMarker.webp'
+import UndefinedMarker from '../../utils/Img/MapMarkers/Undefined.webp'
 
 
 let RenderMap = (props) =>{

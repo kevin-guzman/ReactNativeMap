@@ -14,23 +14,18 @@ import ButtonMap from '../components/Map/ButtonsMap'
 import Loading from '../components/Loading'
 //Images
 import Reload from '../utils/Img/Reload.jpg'
-import CovidMarker from '../utils/Img/MapMarkers/CovidMarker.png'
-import GeneralMarker from '../utils/Img/MapMarkers/GeneralMarker.png'
-import OdontologiaMarker from '../utils/Img/MapMarkers/OdontologiaMarker.png'
+import CovidMarker from '../utils/Img/MapMarkers/CovidMarker.webp'
+import GeneralMarker from '../utils/Img/MapMarkers/GeneralMarker.webp'
+import OdontologiaMarker from '../utils/Img/MapMarkers/OdontologiaMarker.webp'
 import Geolocation from '@react-native-community/geolocation';
-
+//Api
+import {getHospitals} from '../api/Hospitals'
 
 
 let Mapa = (props) =>{
     const {navigation}=props
     const [hospitalCategory, sethospitalCategory]= useState('NoSelected')
     const [initialRegion, setInitialRegion] = useState(null)
-        /* {latitude: 5.6097100,
-        longitude: -74.0817500,
-        latitudeDelta: 0.27, 
-        longitudeDelta: 0.27, } */
-    /*0.0922*/
-    /*0.0421*/
 
     const onMapPress = (MarkerCoord) =>{
         let m = MarkerCoord.nativeEvent.coordinate
@@ -45,6 +40,8 @@ let Mapa = (props) =>{
 
     useEffect(()=>{
         GetLocation()
+        /* getHospitals(3)
+        .then((r)=>console.log(r)) */
     },[])
 
     const GetLocation = async () =>{
