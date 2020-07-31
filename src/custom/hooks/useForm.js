@@ -25,6 +25,9 @@ let useForm = ({initialValues}) => {
                 setFields({...fields, [name]:value})
             }
         }),
+        setForm : (name, value) => {
+            setFields({...fields, [name]: value })
+        }
     }
 }
 

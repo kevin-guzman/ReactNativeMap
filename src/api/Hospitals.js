@@ -8,7 +8,7 @@ export function getHospitals(range=1, lat, lang){
 }
 
 export function registerUser({fields}){
-    const {name, nit, email, lng, lat, address, age, psw, phone, familarPhone,city}= fields
+    const {name, nit, email, age, psw, phone, familarPhone}= fields
     const URL = `${API_HOST}/users`
     return fetch(URL,{
                     method:'POST',
@@ -24,15 +24,9 @@ export function registerUser({fields}){
                         psw,
                         phone,
                         familarPhone,
-                        city,
-                        location:{
-                            lat,
-                            lng
-                        },
-                        address
+                        
                     })
                 })
             .then((response)=>{return response.json()})
             .then((result)=>{return result})
 }
-
